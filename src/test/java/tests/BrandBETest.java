@@ -57,6 +57,33 @@ public class BrandBETest {
         response4.body().prettyPrint();
         Assert.assertEquals(response4.getStatusCode(),200);
 
+        //pasul 5:ne logam cu ADMIN creat
+        System.out.println("STEP 5: LOGIN USER ADMIN REQUEST ");
+
+        RequestUserLoginModel requestBody5 = new RequestUserLoginModel("admin@practicesoftwaretesting.com","welcome01");
+        request.body(requestBody5);
+        Response response5 = request.post("users/login");
+        response5.body().prettyPrint();
+        ResponseUserLoginModel responseBody5 = response5.getBody().as(ResponseUserLoginModel.class);
+        Assert.assertEquals(response5.getStatusCode(), 200);
+
+        //Pasul 6: stergem brandul
+
+        System.out.println("STEP 6:DELETE BRAND REQUEST");
+
+        request.header("Authorization","Bearer" + responseBody5.getAccess_token());
+        Response response6 = request.delete("/brands/"+responseBody.getId());
+        System.out.println(response6.getStatusLine());
+        response6.body().prettyPrint();
+        Assert.assertEquals(response6.getStatusCode(),204);
+
+        //Pasul 7: verificam ca brandul s-a sters
+        System.out.println("STEP 7:CHECK BRAND REQUEST");
+
+        Response response7 = request.get("/brands/"+responseBody.getId());
+        System.out.println(response7.getStatusLine());
+        response7.body().prettyPrint();
+        Assert.assertEquals(response7.getStatusCode(),404);
 
     }
 }
