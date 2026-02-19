@@ -18,6 +18,7 @@ public class UserLoginBETest extends SharedData {
         request.header("Accept", "application/json");
 
         //pasul 1 : creem un nou user
+        System.out.println("STEP 1: CREATE USER REQUEST");
 
         AddressModel addressModel = new AddressModel("Street 1","City","State","Country","1234AA");
         RequestUserModel requestBody = new RequestUserModel("Ioan", "Popaluca",addressModel,"0987654321","1985-02-08","etwQu_@123","aapi@test.com");
@@ -34,6 +35,7 @@ public class UserLoginBETest extends SharedData {
         loginPage.loginProcess(requestBody.getEmail(),requestBody.getPassword());
 
         //pasul 2:ne logam cu userul creat
+        System.out.println("STEP 2: LOGIN USER REQUEST ");
 
         RequestUserLoginModel requestBody2 = new RequestUserLoginModel(requestBody.getEmail(),requestBody.getPassword());
         request.body(requestBody2);
@@ -43,11 +45,51 @@ public class UserLoginBETest extends SharedData {
         Assert.assertEquals(response2.getStatusCode(), 200);
 
         // verificam ca s-a creat userul
+        System.out.println("STEP 3:CHECK USER REQUEST");
+
         request.header("Authorization","Bearer" + responseBody2.getAccess_token());
         Response response3 = request.get("users/"+responseBody.getId());
         System.out.println(response3.getStatusLine());
         response3.body().prettyPrint();
         Assert.assertEquals(response3.getStatusCode(),200);
 
+        System.out.println("STEP 4:LOGOUT USER REQUEST");
+
+        request.header("Authorization","Bearer" + responseBody2.getAccess_token());
+        Response response4 = request.get("users/logout");
+        System.out.println(response4.getStatusLine());
+        response4.body().prettyPrint();
+        Assert.assertEquals(response4.getStatusCode(),200);
+
+        //pasul 5:ne logam cu ADMIN creat
+        System.out.println("STEP 5: LOGIN USER ADMIN REQUEST ");
+
+        RequestUserLoginModel requestBody5 = new RequestUserLoginModel("admin@practicesoftwaretesting.com","welcome01");
+        request.body(requestBody5);
+        Response response5 = request.post("users/login");
+        response5.body().prettyPrint();
+        ResponseUserLoginModel responseBody5 = response5.getBody().as(ResponseUserLoginModel.class);
+        Assert.assertEquals(response5.getStatusCode(), 200);
+
+
+
+        // verificam ca s-a creat userul
+        System.out.println("STEP 6:DELETE USER REQUEST");
+
+        request.header("Authorization","Bearer" + responseBody5.getAccess_token());
+        Response response6 = request.delete("users/"+responseBody.getId());
+        System.out.println(response6.getStatusLine());
+        response6.body().prettyPrint();
+        Assert.assertEquals(response6.getStatusCode(),204);
+
+
+        // verificam ca  userul s-a sters
+        System.out.println("STEP 7:CHECK USER REQUEST");
+
+        request.header("Authorization","Bearer" + responseBody5.getAccess_token());
+        Response response7 = request.get("users/"+responseBody.getId());
+        System.out.println(response7.getStatusLine());
+        response7.body().prettyPrint();
+        Assert.assertEquals(response7.getStatusCode(),404);
     }
 }
