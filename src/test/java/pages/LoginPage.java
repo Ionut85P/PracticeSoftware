@@ -1,11 +1,8 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
-import static java.sql.DriverManager.getDriver;
 
 public class LoginPage extends BasePage{
     public LoginPage(WebDriver driver) {

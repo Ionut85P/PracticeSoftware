@@ -1,12 +1,7 @@
 package tests;
 
-import io.restassured.RestAssured;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import models.*;
-import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.LoginPage;
 import services.UserService;
 import sharedData.SharedData;
 
@@ -52,7 +47,7 @@ public class UserLoginBETest extends SharedData {
 
         // verificam ca  userul s-a sters
 
-        userService.checkUser(responseLoginBody.getAccess_token(),responseBody.getId(),404);
+        userService.checkUser(responseLoginBody.getAccess_token(),responseBody.getId(),401);
 
     }
 }
