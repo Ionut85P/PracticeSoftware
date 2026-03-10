@@ -5,6 +5,8 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.testng.Assert;
+import types.EndpointType;
+import types.RequestMethodType;
 
 public class ImageService {
 
@@ -12,7 +14,7 @@ public class ImageService {
 
         System.out.println("STEP 1 :GET ALL IMAGES");
         RequestSpecification request  = RestAssured.given();
-        Response response = request.get("/images");
+        Response response = performRequest(RequestMethodType.REQUEST_GET,request, EndpointType.IMAGE_GET_ALL_ENDPOINT);
         System.out.println(response.getStatusLine());
         response.body().prettyPrint();
         Assert.assertEquals(response.getStatusCode(),200);

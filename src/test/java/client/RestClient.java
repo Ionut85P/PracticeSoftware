@@ -2,6 +2,7 @@ package client;
 
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import types.RequestMethodType;
 
 public class RestClient {
     //trebuie sa fac doua actiuni pe aceasta clasa
@@ -10,13 +11,13 @@ public class RestClient {
 
     public Response performRequest(String requestType, RequestSpecification request, String endpoint){
         switch (requestType){
-            case "POST":
+            case RequestMethodType.REQUEST_POST:
                return prepareClient(request).post(endpoint);
-            case "PUT":
+            case RequestMethodType.REQUEST_PUT:
                return prepareClient(request).put(endpoint);
-            case "GET":
+            case RequestMethodType.REQUEST_GET:
                return prepareClient(request).get(endpoint);
-            case "DELETE":
+            case RequestMethodType.REQUEST_DELETE:
                return prepareClient(request).delete(endpoint);
         }
 

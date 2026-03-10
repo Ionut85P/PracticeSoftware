@@ -6,6 +6,8 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import models.*;
 import org.testng.Assert;
+import types.EndpointType;
+import types.RequestMethodType;
 
 public class UserService {
 
@@ -16,7 +18,7 @@ public class UserService {
         RequestSpecification request = RestAssured.given();
         request.body(requestBody);
 
-        Response response = performRequest("POST",request,"/users/register");
+        Response response = performRequest(RequestMethodType.REQUEST_POST,request, EndpointType.USER_CREATE_ENDPOINT);
         System.out.println(response.getStatusLine());
         response.body().prettyPrint();
         Assert.assertEquals(response.getStatusCode(), 201);
@@ -29,7 +31,7 @@ public class UserService {
         RequestSpecification request = RestAssured.given();
         request.body(requestLoginBody);
 
-        Response response = performRequest("POST", request,"users/login");
+        Response response = performRequest(RequestMethodType.REQUEST_POST, request,EndpointType.USER_LOGIN_ENDPOINT);
         System.out.println(response.getStatusLine());
         response.body().prettyPrint();
         Assert.assertEquals(response.getStatusCode(), 200);
@@ -42,7 +44,7 @@ public class UserService {
         RequestSpecification request = RestAssured.given();
         request.header("Authorization","Bearer" + token);
 
-        Response response3 = performRequest("GET", request, "users/"+ userID);
+        Response response3 = performRequest(RequestMethodType.REQUEST_GET, request, EndpointType.USER_SPECIFIC_ENDPOINT+ userID);
         System.out.println(response3.getStatusLine());
         response3.body().prettyPrint();
         Assert.assertEquals(response3.getStatusCode(),statusCode);
@@ -54,7 +56,7 @@ public class UserService {
         RequestSpecification request = RestAssured.given();
         request.header("Authorization","Bearer" + token);
 
-        Response response4 = performRequest("GET",request, "users/logout");
+        Response response4 = performRequest(RequestMethodType.REQUEST_GET,request, EndpointType.USER_LOGOUT_ENDPOINT);
         System.out.println(response4.getStatusLine());
         response4.body().prettyPrint();
         Assert.assertEquals(response4.getStatusCode(),200);
@@ -65,7 +67,7 @@ public class UserService {
         RequestSpecification request = RestAssured.given();
         request.body(requestBody);
 
-        Response response = performRequest("POST", request,"users/login");
+        Response response = performRequest(RequestMethodType.REQUEST_POST, request,EndpointType.USER_LOGIN_ENDPOINT);
         System.out.println(response.getStatusLine());
         response.body().prettyPrint();
         Assert.assertEquals(response.getStatusCode(), 200);
@@ -77,7 +79,7 @@ public class UserService {
         RequestSpecification request = RestAssured.given();
         request.header("Authorization","Bearer" + token);
 
-        Response response6 = performRequest("DELETE", request, "users/"+userID);
+        Response response6 = performRequest(RequestMethodType.REQUEST_DELETE, request, EndpointType.USER_SPECIFIC_ENDPOINT+userID);
         System.out.println(response6.getStatusLine());
         response6.body().prettyPrint();
         Assert.assertEquals(response6.getStatusCode(),204);
