@@ -4,6 +4,7 @@ import models.*;
 import org.testng.annotations.Test;
 import services.UserService;
 import sharedData.SharedData;
+import types.ResponseStatusType;
 
 public class UserLoginBETest extends SharedData {
     @Test
@@ -27,7 +28,7 @@ public class UserLoginBETest extends SharedData {
         //pasu 3  verificam ca s-a creat userul
 
 
-        userService.checkUser(responseLoginBody.getAccess_token(),responseBody.getId(),200);
+        userService.checkUser(responseLoginBody.getAccess_token(),responseBody.getId(), ResponseStatusType.RESPONSE_OK);
 
      //pasu 4 delogam userul
 
@@ -47,7 +48,7 @@ public class UserLoginBETest extends SharedData {
 
         // verificam ca  userul s-a sters
 
-        userService.checkUser(responseLoginBody.getAccess_token(),responseBody.getId(),401);
+        userService.checkUser(responseLoginBody.getAccess_token(),responseBody.getId(),ResponseStatusType.RESPONSE_NOT_AUTHORIZED);
 
     }
 }

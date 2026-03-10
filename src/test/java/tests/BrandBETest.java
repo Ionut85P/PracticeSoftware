@@ -7,6 +7,7 @@ import models.ResponseUserLoginModel;
 import org.testng.annotations.Test;
 import services.BrandService;
 import services.UserService;
+import types.ResponseStatusType;
 
 public class BrandBETest {
 
@@ -22,7 +23,7 @@ public class BrandBETest {
 
 
         //Pasul 2 verificam ca s-a creat brandul
-        brandService.checkSpecificBrand(responseBody.getId(), 200);
+        brandService.checkSpecificBrand(responseBody.getId(), ResponseStatusType.RESPONSE_OK);
 
         //Pasul 3 modificam un brand
 
@@ -30,7 +31,7 @@ public class BrandBETest {
         brandService.modifySpecificBrand(requestBody3,responseBody.getId());
 
         //Pasul 4 verificam ca s-a modificat brandul
-        brandService.checkSpecificBrand(responseBody.getId(), 200);
+        brandService.checkSpecificBrand(responseBody.getId(), ResponseStatusType.RESPONSE_OK);
 
 
         //pasul 5:ne logam cu ADMIN creat
@@ -45,7 +46,7 @@ public class BrandBETest {
 
 
         //Pasul 7: verificam ca brandul s-a sters
-        brandService.checkSpecificBrand(responseBody.getId(), 404);
+        brandService.checkSpecificBrand(responseBody.getId(), ResponseStatusType.RESPONSE_NOT_FOUND);
 
 
     }

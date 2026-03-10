@@ -9,6 +9,7 @@ import models.ResponseBrandModel;
 import org.testng.Assert;
 import types.EndpointType;
 import types.RequestMethodType;
+import types.ResponseStatusType;
 
 public class BrandService {
    public ResponseBrandModel createBrand(RequestBrandModel requestBody){
@@ -18,7 +19,7 @@ public class BrandService {
        Response response = performRequest(RequestMethodType.REQUEST_POST,request,EndpointType.BRAND_CREATE_ENDPOINT);
        System.out.println(response.getStatusLine());
        response.body().prettyPrint();
-              Assert.assertEquals(response.getStatusCode(), 201);
+              Assert.assertEquals(response.getStatusCode(), ResponseStatusType.RESPONSE_CREATED);
        return response.getBody().as(ResponseBrandModel.class);
 
 
@@ -39,7 +40,7 @@ public class BrandService {
        Response response3 = performRequest(RequestMethodType.REQUEST_PUT, request,EndpointType.BRAND_REQUEST_ENDPOINT+brandID);
        System.out.println(response3.getStatusLine());
        response3.body().prettyPrint();
-       Assert.assertEquals(response3.getStatusCode(), 200);
+       Assert.assertEquals(response3.getStatusCode(), ResponseStatusType.RESPONSE_OK);
    }
 
    public void deleteSpecificBrand(String token, String brandID){
@@ -49,7 +50,7 @@ public class BrandService {
        Response response6 = performRequest(RequestMethodType.REQUEST_DELETE,request,EndpointType.BRAND_REQUEST_ENDPOINT+brandID);
        System.out.println(response6.getStatusLine());
        response6.body().prettyPrint();
-       Assert.assertEquals(response6.getStatusCode(),204);
+       Assert.assertEquals(response6.getStatusCode(),ResponseStatusType.RESPONSE_NO_CONTENT);
 
    }
 

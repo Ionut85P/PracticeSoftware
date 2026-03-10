@@ -3,7 +3,7 @@ package tests;
 import models.RequestUserLoginModel;
 import models.ResponseUserLoginModel;
 import org.testng.annotations.Test;
-import services.ReportServices;
+import services.ReportService;
 import services.UserService;
 
 public class ReportBETest {
@@ -17,7 +17,7 @@ public class ReportBETest {
         UserService userService = new UserService();
         ResponseUserLoginModel responseBody = userService.loginUser(requestBody);
         //Pasul 2 Geneream raportul de vanzari /luna
-        ReportServices reportService = new ReportServices();
+        ReportService reportService = new ReportService();
         reportService.generateAverageSalesPerMonthReport(responseBody.getAccess_token());
 
     }
